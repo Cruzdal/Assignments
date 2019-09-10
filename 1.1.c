@@ -12,25 +12,35 @@ for the power that was entered and within the range
 
 int main (int argc, char *argv[])//takes arguments from command line
 {
-   int k, q, p, tot;
+   int k, q, p, total;
 
    printf("Question: %s",argv[0]);
    printf("\nInput a power, minimum range and a max range\n");
    scanf("%d%d%d",&k, &q, &p);
 
-   tot = armstrong(k,q,p);
+   total = armstrong(k,q,p);
 
-   printf("%d\n", tot);
+   printf("%d\n", total);
 }
 
 
-int armstrong(int k, int q, int p)//calculates the armstrong number
+int armstrong(int k, int q, int p)//calculates the armstrong number. the int l is the letter L and not a one.
 {
-    int sum = k + q +p;
-    int l;
+    int sum,l,num;
+
     for (l=q; l<=p; l++)
     {
-    sum += pow(l,k);
+        num = l/10;
+        l = l%10;
+        sum += pow(l,k);
     }
-    return sum;
+    if(sum == l)
+        {
+        return sum;
+        }
+
+    else
+        {
+        //do nothing
+        }
 }
