@@ -19,32 +19,41 @@ ie
 */
 void gcd (int e)
 {
-
-    int n,
-    rem;
-
+    int n, rem, count;
+    count = 0;
     for(n = 1; n < e; n++)
     {
-        int count = 0,
-        div = 0;
+        int div = 0;
 
+        rem;
 
-
-        while(rem!=0)
-        {
-            rem = e%n;
+       // while(rem!=0)
+        //{
+            rem = e % n;
+            count++;
+printf("%d ", rem);
+printf("%d\n", count);
+          //  if(rem == 1)
+          //  {
+          //      count++;
+          //  }
         }
 
 
-    }
+//    }
 
-    printf("%d", &n, " is: %d", &rem);
+    //printf("%d is %d", e, count);
 
 }
 
+
+
+
 int main (int argc, char *argv[])//takes arguments from command line
 {
-   int e = atoi (argv[1]);
+   //int e = atoi (argv[1]);
+   int e;
+   scanf("%d", &e);
    gcd(e);
 }
 
