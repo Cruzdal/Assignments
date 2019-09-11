@@ -16,28 +16,27 @@ int main (int argc, char *argv[])//takes arguments from command line
    //printf("Question: %s ",argv[0]);//prints the file name
 
    scanf("%d%d%d",&k,&q,&p);//power, min, max range
-
    armstrong(k,q,p);
 
    //printf("%d\n", total);//prints the armstrong numbers
 }
 
 
-void armstrong(int k, int q, int p)//calculates the armstrong number. the int l is the letter L and not a one.
+void armstrong(int k, int q, int p)//calculates the armstrong number.
 {
     int a;
 
     for (a = q; a <= p; a++)
     {
-        int sum,num,rem;
+        int sum, num, rem, count;
         sum = 0;
-        num = 1;
+        num = a;
 
-        while(num!=0)
+        while(num != 0)
         {
-        rem  = num%10;//gets the remainder
-        sum += pow(rem,k);//powers the remainder by k
-        num /= 10;//shifts the number
+        rem  = num % 10;    //gets the remainder
+        sum += pow(rem,k);  //powers the remainder by k
+        num /= 10;          //shifts the number
         }
 
         if(sum == a)//if the summed power is an armstrong
@@ -45,13 +44,4 @@ void armstrong(int k, int q, int p)//calculates the armstrong number. the int l 
         printf("%d\n", sum);
         }
     }
-//    else
-//        {
-//        //do nothing
-//        }
 }
-/* displays numbers with the length of the power
-if (sum == k){
-    return sum;
-}
-*/
