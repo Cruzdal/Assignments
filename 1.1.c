@@ -13,9 +13,9 @@ int main (int argc, char *argv[])//takes arguments from command line
 {
    int k, q, p;
 
-   printf("Question: %s ",argv[0]);//prints the file name
+   //printf("Question: %s ",argv[0]);//prints the file name
 
-   scanf("%d%d%d",&k, &q, &p);//power, min, max range
+   scanf("%d%d%d",&k,&q,&p);//power, min, max range
 
    armstrong(k,q,p);
 
@@ -23,15 +23,15 @@ int main (int argc, char *argv[])//takes arguments from command line
 }
 
 
-int armstrong(int k, int q, int p)//calculates the armstrong number. the int l is the letter L and not a one.
+void armstrong(int k, int q, int p)//calculates the armstrong number. the int l is the letter L and not a one.
 {
     int a;
 
     for (a = q; a <= p; a++)
     {
-        int sum = 0,
-        num = 1,
-        rem;
+        int sum,num,rem;
+        sum = 0;
+        num = 1;
 
         while(num!=0)
         {
