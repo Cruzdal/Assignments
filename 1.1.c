@@ -13,12 +13,8 @@ int main (int argc, char *argv[])//takes arguments from command line
 {
    int k, q, p;
 
-   //printf("Question: %s ",argv[0]);//prints the file name
-
    scanf("%d%d%d",&k,&q,&p);//power, min, max range
    armstrong(k,q,p);
-
-   //printf("%d\n", total);//prints the armstrong numbers
 }
 
 
