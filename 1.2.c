@@ -17,44 +17,38 @@ ie
  15 = 8
 
 */
-void gcd (int e)
+
+void gcd (int p)
 {
-    int n, rem, count;
-    count = 0;
-    for(n = 1; n < e; n++)
+    int q, rem,result = 0, length=0, count=0;
+   // rem = p % q;
+    for(q = 1; q < p; q++)
     {
-        int div = 0;
+            length++;
+            do{
+            result = rem;
+            rem = q % rem;
+            q = rem;
+            } while(rem !=0);
 
-        rem;
+            if(rem == 1)
+            {
+                count++;
+            }
 
-       // while(rem!=0)
-        //{
-            rem = e % n;
-            count++;
-printf("%d ", rem);
-printf("%d\n", count);
-          //  if(rem == 1)
-          //  {
-          //      count++;
-          //  }
-        }
+    printf("%2d %d %d \n", length,rem,count);
+    }
 
-
-//    }
-
-    //printf("%d is %d", e, count);
 
 }
-
-
 
 
 int main (int argc, char *argv[])//takes arguments from command line
 {
    //int e = atoi (argv[1]);
-   int e;
-   scanf("%d", &e);
-   gcd(e);
+   int p,q;
+   scanf("%d", &p);
+   gcd(p);
 }
 
 
