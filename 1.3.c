@@ -33,7 +33,7 @@ int main(){
 	printf("Please enter a Character:\n");
 	scanf("%c",&character);
 	
-	//Call rmchr() function
+	//Calls rmchr() function
 	rmchr(userInput , character );
 
 	
