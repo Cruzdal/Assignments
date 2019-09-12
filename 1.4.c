@@ -1,6 +1,6 @@
 /*
 * Name: Jash Patel
-* Assignement 1: question 1.3c
+* Assignement 1: question 1.4c
 * Summary: This program is designed to remove all the occurances of a character from second string  in the string
 */
 #include <stdio.h>
@@ -24,7 +24,7 @@ void rmstr(char str[],char str2[]){
 			 printf("%c", *ptr);       // Print non occuraces characters in a string
 			 
 		}
-		//incrementStr2=str2[count++];
+	
 	}
   }
 
@@ -37,9 +37,6 @@ int main(){
 	scanf("%[^\n]%*c",userInput1); // takes the user input input until newline
 	printf("Please enter the second String:\n");
 	scanf("%[^\n]%*c",userInput2);
-	 //char twoStr [200];
-   //memcpy(userInput1, userInput2, sizeof(userInput2));
-  // printf("After memcpy dest = %s\n", userInput1);
      
      rmstr(userInput1 , userInput2);
 
