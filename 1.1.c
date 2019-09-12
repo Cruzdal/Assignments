@@ -1,4 +1,6 @@
 /*
+Written by: Dallas Cruz
+
 The user inputs 3 numbers, a power and a range.
 The program will then output the armstrong numbers
 for the power that was entered and within the range
@@ -31,7 +33,7 @@ void armstrong(int k, int q, int p)//calculates the armstrong number.
 
         if(sum == a && count == k)//if the summed power is an armstrong AND if the length is the same as the power
         {
-            printf("%d", sum); // prints out the armstrong numbers
+            printf("%d\n", sum); // prints out the armstrong numbers
 
         }
     }
@@ -45,4 +47,6 @@ int main (int argc, char *argv[])//takes arguments from command line
         q = atoi (argv[3]);
 
     armstrong(k,p,q);
+
+    return 0;
 }
