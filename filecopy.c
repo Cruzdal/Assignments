@@ -17,7 +17,7 @@ int main (int argc, char *argv[])
 
     int pipeId[2];
 
-    if (argc != 3)     //if more than 3 arguments were given
+    if (argc != 3)     //if there isnt 3 arguments
     	{
 
       		perror("Filecopy needs 3 arguments. \n");
