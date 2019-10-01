@@ -1,3 +1,8 @@
+/**
+ * Name: Jash Patel
+ * Summary: This program is designed to receive data from client server and then sends the same 
+ * 			data back to the client.
+ */
 import java.net.*;
 import java.util.Scanner;
 import java.io.*;
@@ -6,43 +11,41 @@ public class EchoServer {
 	public static void main(String[] args) {
 
 		try {
-
-				ServerSocket serverSocket = new ServerSocket(50);
-
-			
-				System.out.println("server waiting, use cntl-C to quit\n");
-				Socket clientSocket = serverSocket.accept();
-				System.out.println("server connected");
-				
-				InputStream dataInput = clientSocket.getInputStream();
-				OutputStream dataOutput = clientSocket.getOutputStream();
-			
-	         while (true) {   
+            //Create a connection for a server
+			ServerSocket serverSocket = new ServerSocket(12345);
+			//Accept the connection at port 12345
+			Socket clientSocket = serverSocket.accept();
+            
+			//Create input and output objects
+			InputStream dataInput = clientSocket.getInputStream();
+			OutputStream dataOutput = clientSocket.getOutputStream();
+            
+			//While connection is available send input data back to client 
+			while (true) {
+				//Declare buffer array to store input data
 				byte[] buffer = new byte[1024];
-			
+				//Read input data by storing input data into buffer
 				int readInput = dataInput.read(buffer, 0, buffer.length);
-				 
+
+				String convertToString = "";
 				
-				String convertToString= "";
-				if(readInput !=-1) {
-					 convertToString = new String(buffer);
-					System.out.println(convertToString);
-			
+				//Convert input data to string before reached end of socket connection 
+				if (readInput != -1) {
+					convertToString = new String(buffer);
+				} else {
+					break; //Break out of loop when reached end of socket connection
 				}
-				else {
-					break;
-				}
-				dataOutput.write(buffer);
-				dataOutput.flush();
-			
-			
-				dataInput.close();
-				clientSocket.close();
-				serverSocket.close();
-	         }
+				dataOutput.write(buffer);  //Write the data back to client
+				dataOutput.flush();        //Forces buffered output bytes to be written
+
+			}
+			//Close the socket connection
+			dataInput.close();
+			clientSocket.close();
+			serverSocket.close();
 
 		} catch (IOException e) {
-			System.err.println("Server Disconnected");
+			// do nothing
 
 		}
 	}
