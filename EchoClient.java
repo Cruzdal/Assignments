@@ -24,7 +24,7 @@ public class EchoClient {
 		try {
 			//Create localhost connection
 			Socket connection = new Socket(localhost, 12345);
-            //Create input and output objects
+            		//Create input and output objects
 			InputStream dataInput = connection.getInputStream();
 			OutputStream dataOutput = connection.getOutputStream();
 			//Create scanner to read user input
