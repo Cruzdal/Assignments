@@ -13,7 +13,6 @@ int main (int argc, char *argv[])
     char buffer[200];
     char cBuffer[200];
     int pipeId[2];
-    pid_t cId;
 
     if (argc != 3)     //if there isnt 3 arguments
     	{
@@ -37,7 +36,7 @@ int main (int argc, char *argv[])
             write(copied, cBuffer, cFile);                                           // writes the contents of pipe and puts it into child buffer
         }
 
-        else if (cId == -1)
+        else if (fork() == -1)
         {
 
             perror("There was a problem");
