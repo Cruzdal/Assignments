@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     pthread_join(miT,NULL);
 
     printf("Average value is %d \n", average);
-    printf("Minimum value is %d \n", minimum);
     printf("Maximum value is %d \n", maximum);
+    printf("Minimum value is %d \n", minimum);
 
 }
