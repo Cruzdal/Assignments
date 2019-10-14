@@ -16,7 +16,15 @@ int min;
 
 void *average(void *arg)
 {
+    int *avgNum = (int*) arg;
+    int sum = 0,i;
 
+    for (i=0; i < count; i++)
+    {
+        sum = sum + avgSum[i];
+    }
+    avg = (sum/count);
+    pthread_exit(0);
 }
 
 void *maximum(void *arg)
