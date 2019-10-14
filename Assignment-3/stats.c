@@ -14,7 +14,7 @@ int avg;
 int max;
 int min;
 
-void *average(void *arg)
+void *average(void *arg) //Function that determines the average numbers given
 {
     int *avgNum = (int*) arg, sum = 0,i;
 
@@ -26,7 +26,7 @@ void *average(void *arg)
     pthread_exit(0);
 }
 
-void *maximum(void *arg)
+void *maximum(void *arg)  //Function that determines the maximum numbers given
 {
     int *maxNum = (int*) arg, i;
     max = maxNum[0];
@@ -41,7 +41,7 @@ void *maximum(void *arg)
     pthread_exit(0);
 }
 
-void *minimum(void *arg)
+void *minimum(void *arg)  //Function that determines the minimum numbers given
 {
     int *minNum = (int*) arg, i;
     min = minNum[0];
@@ -58,5 +58,27 @@ void *minimum(void *arg)
 
 int main(int argc, char *argv[])
 {
+    int i,numbers =0;
+
+    for(i=1; i < argc; i++)
+    {
+        numbers = atoi (argv[i]);
+    }
+
+    pthread_t aT;   //Average Thread
+    pthread_t maT;  //Maximum Thread
+    pthread_t miT;  //Minimum Thread
+
+    pthread_create(&aT,NULL,average,(void*)numbers);
+    pthread_create(&maT,NULL,maximum,(void*)numbers);
+    pthread_create(&miT,NULL,minimum,(void*)numbers);
+
+    pthread_join(aT,NULL);
+    pthread_join(maT,NULL);
+    pthread_join(miT,NULL);
+
+    printf("Average value is %d \n", average);
+    printf("Minimum value is %d \n", minimum);
+    printf("Maximum value is %d \n", maximum);
 
 }
