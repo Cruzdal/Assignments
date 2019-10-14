@@ -16,12 +16,11 @@ int min;
 
 void *average(void *arg)
 {
-    int *avgNum = (int*) arg;
-    int sum = 0,i;
+    int *avgNum = (int*) arg, sum = 0,i;
 
     for (i=0; i < count; i++)
     {
-        sum = sum + avgSum[i];
+        sum = sum + avgNum[i];
     }
     avg = (sum/count);
     pthread_exit(0);
@@ -29,12 +28,32 @@ void *average(void *arg)
 
 void *maximum(void *arg)
 {
+    int *maxNum = (int*) arg, i;
+    max = maxNum[0];
 
+    for (i=0; i < count; i++)
+    {
+        if(maxNum[i] > max)
+        {
+            max = maxNum[i];
+        }
+    }
+    pthread_exit(0);
 }
 
 void *minimum(void *arg)
 {
+    int *minNum = (int*) arg, i;
+    min = minNum[0];
 
+    for (i=0; i < count; i++)
+    {
+        if(minNum[i] < min)
+        {
+            min = minNum[i];
+        }
+    }
+    pthread_exit(0);
 }
 
 int main(int argc, char *argv[])
