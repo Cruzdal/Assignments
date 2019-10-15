@@ -58,7 +58,7 @@ public class EchoClientThread {
 					System.out.println("Server: " + convertToString);
 				}
 			}
-			//Close Connection
+			//Close Connections
 			dataInput.close();
 			dataOutput.close();
 
