@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
     if (argc != 3)     //if there isnt 3 arguments
     	{
-      		perror("Filecopy needs 3 arguments. \n");
+      		perror("This program needs 3 arguments. \n");
       		exit(1);
     	}
 
