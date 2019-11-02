@@ -64,12 +64,18 @@ void *producer (void *param)
 
 int main(int argc, char *argv[]) {
 
-
+// 1. Get command line arguments argv[1],argv[2],argv[3]
     if (argc != 3)     //if there isnt 3 arguments
     	{
       		perror("This program needs 3 arguments. \n");
       		exit(1);
     	}
+// 2. Initialize buffer
+// 3. Create producer thread(s)
+// 4. Create consumer thread(s)
+// 5. Sleep
+// 6. Exit
+
 
     return 0;
 }
