@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 /*
 Product consumer problem using pthread or POSIX threads
 This program will altername between sleeping for a random
@@ -10,14 +13,58 @@ Once awake, will attempt to remove an item from the buffer
 #include <pthread.h>
 #include <unistd.h>
 
-typedef int buffer item;
+typedef int buffer_item;
 #define BUFFER_SIZE 5
+//buffer_item buffer = (*buffer_item) malloc (sizeof (buffer_item) *BUFFER_SIZE);
+buffer_item buffer[BUFFER_SIZE];
 int count = 0;
-buffer_item buffer = (*buffer_item) malloc (sizeof (buffer_item) *BUFFER_SIZE);
+
+int insert_item (buffer_item *item)
+{
+	do{
+		//Produce an item in next_produced
+		wait(empty);
+		wait(mutex);
+		
+		//add next_produced to buffer
+		signal(mutex);
+		signal(full);
+		
+	}while(true);
+    // insert an object into buffer
+    *item = buffer [count++];
+
+     //return 0 if successful, otherwise
+     return 0;
+     //return -1 indicating an error condition
+}
+
+int remove_item (buffer_item *item)
+{
+	do{
+	
+		wait(full);
+		wait(mutex);
+		
+		//remove an item from buffer to next_consumed
+		signal(mutex);
+		signal(empty);
+		
+		//consume the item in next_consumed
+		
+	}while(true);
+    // remove an object from buffer placing it in item
+    *item = buffer [count--];
+
+     //return 0 if successful, otherwise
+     return 0;
+     //return -1 indicating an error condition
+
+}
 
 void *producer (void *param)
 {
-   buffer item item;
+   buffer_item item;
 
    while (true)
    {
@@ -25,7 +72,7 @@ void *producer (void *param)
 
        item = rand();
 
-       if (insert_item(intem))
+       if (insert_item(item))
        {
            fprintf("Number could not be inserted into buffer");
        }
@@ -38,7 +85,7 @@ void *producer (void *param)
 
  void *consumer (void *param)
  {
-     buffer item item;
+     buffer_item item;
 
      while (true)
      {
@@ -56,26 +103,7 @@ void *producer (void *param)
      }
  }
 
-int insert_item (buffer_item *item)
-{
-    // insert an object into buffer
-    *item = buffer [count++];
 
-     //return 0 if successful, otherwise
-     return 0;
-     //return -1 indicating an error condition
-}
-
-int remove_item (buffer_item *item)
-{
-    // remove an object from buffer placing it in item
-    *item = buffer [count--];
-
-     //return 0 if successful, otherwise
-     return 0;
-     //return -1 indicating an error condition
-
-}
 
 int main(int argc, char *argv[]) {
     int sleepDur;
