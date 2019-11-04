@@ -12,25 +12,16 @@ Once awake, will attempt to remove an item from the buffer
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <semaphore.h>
 
 typedef int buffer_item;
 #define BUFFER_SIZE 5
 //buffer_item buffer = (*buffer_item) malloc (sizeof (buffer_item) *BUFFER_SIZE);
 buffer_item buffer[BUFFER_SIZE];
 int count = 0;
-
+sem_t full, empty, mutex;
 int insert_item (buffer_item *item)
 {
-	do{
-		//Produce an item in next_produced
-		wait(empty);
-		wait(mutex);
-		
-		//add next_produced to buffer
-		signal(mutex);
-		signal(full);
-		
-	}while(true);
     // insert an object into buffer
     *item = buffer [count++];
 
@@ -41,18 +32,7 @@ int insert_item (buffer_item *item)
 
 int remove_item (buffer_item *item)
 {
-	do{
 	
-		wait(full);
-		wait(mutex);
-		
-		//remove an item from buffer to next_consumed
-		signal(mutex);
-		signal(empty);
-		
-		//consume the item in next_consumed
-		
-	}while(true);
     // remove an object from buffer placing it in item
     *item = buffer [count--];
 
@@ -68,10 +48,16 @@ void *producer (void *param)
 
    while (true)
    {
+   	   //Produce an item
        sleep(rand());
-
        item = rand();
-
+       
+       sem_wait(&empty);
+       sem_wait(&mutex);
+       
+       //insert item in buffer
+      // insert_item(item);
+       
        if (insert_item(item))
        {
            fprintf("Number could not be inserted into buffer");
@@ -80,6 +66,8 @@ void *producer (void *param)
        {
            printf("Producer produced %d\n" ,item);
        }
+       sem_post(&mutex);
+       sem_post(&full);
    }
 }
 
@@ -88,9 +76,15 @@ void *producer (void *param)
      buffer_item item;
 
      while (true)
-     {
+     {		
+     
          sleep(rand());
-
+         sem_wait(&full);
+         sem_wait(&mutex);
+         
+         //remove item from buffer
+         remove_item(&item);
+         
          if (remove_item(&item))
          {
              fprintf("Consumer could not remove number");
@@ -99,10 +93,10 @@ void *producer (void *param)
          {
              printf("consumer consumed %d\n" ,item);
          }
-
+		sem_post(&mutex);
+        sem_post(&empty);
      }
  }
-
 
 
 int main(int argc, char *argv[]) {
@@ -115,23 +109,51 @@ int main(int argc, char *argv[]) {
       		perror("This program needs 3 arguments. \n");
       		exit(1);
     	}
-    sleepDur = atoi (argv1);
-    mkProd   = atoi (argv2);
-    mkCon    = atoi (argv3);
+    sleepDur = atoi (argv[0]);
+    mkProd   = atoi (argv[1]);
+    mkCon    = atoi (argv[2]);
 
+	//Declare threads
+	pthread_t tidProd, tidCons;
+	//Declare default attribute
+	pthread_t attr_t attr;
+	
+	//Initialize semaphores
+	sem_init(&full,0,0);
+	sem_init(&empty,0,5);
+	sem_init(&mutex,0,1);
+	
+	//Initialize default attribute
+	pthread_attr_init(&attr);
+ 	//int pthread_create(thread id, attribute, void*(*start_routine)(void*), arg)
+ 	for(int x=0; x < mkProd; x++){
+ 		pthread_create(&tidProd,&attr,producer,null);
+	 }
+	 for(int x=0; x < mkCon; x++){
+ 		pthread_create(&tidCons,&attr,consumer,null);
+	 }
+	
 
-
-
-// 2. Initialize buffer
-    initialize();
-// 3. Create producer thread(s)
-    pthread_t producer [mkProd];
-// 4. Create consumer thread(s)
-    pthread_t consumer [mkCon];
-// 5. Sleep
-    sleep(sleepDur);
-// 6. Exit
+   	// Sleep
+	pthread_join(tidProd,sleepDur);//wait for thread to exit
+	pthread_join(tidCons,sleepDur);
+	
+	
+	// 2. Initialize buffer
+   //initialize();
+ 	// pthread_attr_init(&attr);
+	// 3. Create producer thread(s)
+  //pthread_t producer [mkProd];
+ 
+	// 4. Create consumer thread(s)
+   // pthread_t consumer [mkCon];
+  
+	// 5. Sleep
+   // sleep(sleepDur);
+	// 6. Exit
+	exit(0);
 
 
     return 0;
 }
+
