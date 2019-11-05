@@ -24,19 +24,19 @@ void *producer (void *param)
 
    while (1)
    {
-   	   //Produce an item
+       //Produce an item
        sleep(rand()%5);
        item = rand() ;
        
        sem_wait(&empty);
-	   pthread_mutex_lock(&mutex);
+       pthread_mutex_lock(&mutex);
     
        if (insert_item(item)){
-       		printf("Number could not be inserted into buffer");
+           printf("Number could not be inserted into buffer");
        		
        }
        else{
-    		printf("Producer produced %d\n" ,item);
+           printf("Producer produced %d\n" ,item);
        }
        
        pthread_mutex_unlock(&mutex);
@@ -49,12 +49,12 @@ void *producer (void *param)
 
     while (1)
     {		
-		sleep(rand()%5);
+	sleep(rand()%5);
     	sem_wait(&full);
-		pthread_mutex_lock(&mutex);
+	pthread_mutex_lock(&mutex);
       
         if (remove_item(&item)){
-        	printf("Consumer could not remove number");
+            printf("Consumer could not remove number");
         
         }
         else{
@@ -62,7 +62,7 @@ void *producer (void *param)
         
         }
         
-	    pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&mutex);
         sem_post(&empty);
     }
  }
@@ -72,16 +72,16 @@ int insert_item (buffer_item item)
     //Insert an object into buffer
     if(count < BUFFER_SIZE){
 	
-		//Insert item into buffer
-		buffer [count] = item;
-		count++;
+	//Insert item into buffer
+	buffer [count] = item;
+	count++;
 		
-		//Return 0 if successful
-		return 0;
+	//Return 0 if successful
+	return 0;
      }
 	 
-	//Return -1 indicating an error condition
-	return -1;
+     //Return -1 indicating an error condition
+     return -1;
 }
 
 int remove_item (buffer_item *item)
@@ -90,22 +90,20 @@ int remove_item (buffer_item *item)
     // remove an object from buffer placing it in item
     if (count >0){
 	
-		//remove item from buffer
+	//remove item from buffer
     	*item = buffer [count-1];
-		count--;
+	count--;
 		
-		//return 0 if successful
-		return 0;
-    }
-	
+	//return 0 if successful
+	return 0;
+    }	
 	//return -1 indicating an error condition
 	return -1;
-
 }
 
 int main(int argc, char *argv[]) {
     int sleepDur, mkProd, mkCon;
-   	int x;
+    int x;
 
 	// 1. Get command line arguments argv[1],argv[2],argv[3]
     if (argc != 4){    //if there isnt 3 arguments
@@ -136,12 +134,12 @@ int main(int argc, char *argv[]) {
 	
  	for(x=0; x < mkProd; x++){
  		
- 		pthread_create(&tid,&attr,producer,NULL);
+ 	    pthread_create(&tid,&attr,producer,NULL);
  		
 	}
 	for(x=0; x < mkCon; x++){
 		
- 		pthread_create(&tid,&attr,consumer,NULL);
+ 	    pthread_create(&tid,&attr,consumer,NULL);
  		
 	}
 	
