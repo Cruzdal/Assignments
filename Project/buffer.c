@@ -29,7 +29,7 @@ void *producer (void *param)
        item = rand() ;
        
        sem_wait(&empty);
-       pthread_mutex_lock(&mutex);
+	   pthread_mutex_lock(&mutex);
     
        if (insert_item(item)){
        		printf("Number could not be inserted into buffer");
@@ -49,12 +49,10 @@ void *producer (void *param)
 
     while (1)
     {		
-     
-   		sleep(rand()%5);
+		sleep(rand()%5);
     	sem_wait(&full);
 		pthread_mutex_lock(&mutex);
       
-         
         if (remove_item(&item)){
         	printf("Consumer could not remove number");
         
@@ -73,16 +71,16 @@ int insert_item (buffer_item item)
 	
     //Insert an object into buffer
     if(count < BUFFER_SIZE){
-    	
-	    //Insert item into buffer
-        buffer [count] = item;
-	    count++;
-	    
-	    //Return 0 if successful
-     	return 0;
+	
+		//Insert item into buffer
+		buffer [count] = item;
+		count++;
+		
+		//Return 0 if successful
+		return 0;
      }
-   
-    //Return -1 indicating an error condition
+	 
+	//Return -1 indicating an error condition
 	return -1;
 }
 
@@ -91,14 +89,15 @@ int remove_item (buffer_item *item)
 	
     // remove an object from buffer placing it in item
     if (count >0){
+	
 		//remove item from buffer
     	*item = buffer [count-1];
 		count--;
-
+		
 		//return 0 if successful
 		return 0;
     }
-
+	
 	//return -1 indicating an error condition
 	return -1;
 
@@ -147,7 +146,7 @@ int main(int argc, char *argv[]) {
 	}
 	
    	// Sleep
-	 sleep(sleepDur);
+	sleep(sleepDur);
 
 	// 6. Exit
 	exit(0);
