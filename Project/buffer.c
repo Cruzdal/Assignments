@@ -31,13 +31,12 @@ void *producer (void *param)
        sem_wait(&empty);
        pthread_mutex_lock(&mutex);
     
-       if (insert_item(item))
-       {
-        printf("Number could not be inserted into buffer");
+       if (insert_item(item)){
+       		printf("Number could not be inserted into buffer");
+       		
        }
-       else
-       {
-        printf("Producer produced %d\n" ,item);
+       else{
+    		printf("Producer produced %d\n" ,item);
        }
        
        pthread_mutex_unlock(&mutex);
@@ -84,7 +83,7 @@ int insert_item (buffer_item item)
      }
    
     //Return -1 indicating an error condition
-   	return -1;
+	return -1;
 }
 
 int remove_item (buffer_item *item)
@@ -114,10 +113,11 @@ int main(int argc, char *argv[]) {
 
       	printf("Usage: myprog arg1 arg2 arg3\narg1: Sleep Duration \narg2: Number of Producer Threads \narg3: Number of Consumer Threads\n");
       	exit(0);
-    	}
-   	sleepDur = atoi (argv[1]);
-   	mkProd = atoi (argv[2]);
-    mkCon = atoi (argv[3]);
+    }
+    
+	sleepDur = atoi (argv[1]);
+	mkProd = atoi (argv[2]);
+	mkCon = atoi (argv[3]);
 
 	//Declare threads
 	pthread_t tidProd, tidCons, tid;
