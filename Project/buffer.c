@@ -32,7 +32,7 @@ void *producer (void *param)
        item = rand() ;
 
        sem_wait(&empty);
-	   pthread_mutex_lock(&mutex);//locks until the next mutex is available
+       pthread_mutex_lock(&mutex);//locks until the next mutex is available
 
        if (insert_item(item))
        {
