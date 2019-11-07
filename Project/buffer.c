@@ -24,10 +24,11 @@ void *producer (void *param)
 
    while (1)
    {
-   	   //Produce an item
-   	   //sleep for a random period of time
+       //Produce an item
+       //Sleep for a random period of time
        sleep(rand()%5);
-       //generates a random number
+	   
+       //Generate a random number
        item = rand() ;
 
        sem_wait(&empty);
@@ -35,12 +36,12 @@ void *producer (void *param)
 
        if (insert_item(item))
        {
-       		printf("Number could not be inserted into buffer");
+       	   printf("Number could not be inserted into buffer");
 
        }
        else
        {
-    		printf("Producer produced %d\n" ,item);
+    	   printf("Producer produced %d\n" ,item);
        }
 
        pthread_mutex_unlock(&mutex);//unlocks the mutex so another one can be used
@@ -55,20 +56,20 @@ void *producer (void *param)
     {
         //consumes an item
         //sleep for a random period of time
-		sleep(rand()%5);
+	sleep(rand()%5);
     	sem_wait(&full);
-		pthread_mutex_lock(&mutex);//locks until the next mutex is available
+	pthread_mutex_lock(&mutex);//locks until the next mutex is available
 
         if (remove_item(&item))
         {
-        	printf("Consumer could not remove number");
+            printf("Consumer could not remove number");
         }
         else
         {
             printf("Consumer consumed %d\n" ,item);
         }
 
-	    pthread_mutex_unlock(&mutex);//unlocks the mutex so another one can be used
+	pthread_mutex_unlock(&mutex);//unlocks the mutex so another one can be used
         sem_post(&empty);
     }
  }
@@ -79,16 +80,16 @@ int insert_item (buffer_item item)
     if(count < BUFFER_SIZE)
     {
 
-		//Insert item into buffer
-		buffer [count] = item;
-		count++;
+	//Insert item into buffer
+	buffer [count] = item;
+	count++;
 
-		//Return 0 if successful
-		return 0;
+	//Return 0 if successful
+	return 0;
      }
 
-	//Return -1 indicating an error condition
-	return -1;
+   //Return -1 indicating an error condition
+   return -1;
 }
 
 int remove_item (buffer_item *item)
@@ -98,12 +99,12 @@ int remove_item (buffer_item *item)
     if (count >0)
     {
 
-		//remove item from buffer
+	//remove item from buffer
     	*item = buffer [count-1];
-		count--;
+	count--;
 
-		//return 0 if successful
-		return 0;
+	//return 0 if successful
+	return 0;
     }
 
 	//return -1 indicating an error condition
@@ -113,11 +114,11 @@ int remove_item (buffer_item *item)
 
 int main(int argc, char *argv[])
 {
-    int sleepDur, mkProd, mkCon;
-   	int x;
+   int sleepDur, mkProd, mkCon;
+   int x;
 
-	// 1. Get command line arguments argv[1],argv[2],argv[3]
-	//if there isnt 4 arguments
+    // 1. Get command line arguments argv[1],argv[2],argv[3]
+    //if there isnt 4 arguments
     if (argc != 4)
     {
       	printf("Usage: myprog arg1 arg2 arg3\narg1: Sleep Duration \narg2: Number of Producer Threads \narg3: Number of Consumer Threads\n");
@@ -141,17 +142,17 @@ int main(int argc, char *argv[])
 
 	//Initialize default attribute
 	pthread_attr_init(&attr);
-
- 	//int pthread_create(thread id, attribute, void*(*start_routine)(void*), arg)
+	
 	//3. & 4. Create producer and consumer threads
+ 	//int pthread_create(thread id, attribute, void*(*start_routine)(void*), arg)
 
  	for(x=0; x < mkProd; x++)
-    {
- 		pthread_create(&tid,&attr,producer,NULL);
+        {
+ 	    pthread_create(&tid,&attr,producer,NULL);
 	}
 	for(x=0; x < mkCon; x++)
-    {
- 		pthread_create(&tid,&attr,consumer,NULL);
+        {
+ 	    pthread_create(&tid,&attr,consumer,NULL);
 	}
 
    	// 5. Sleep
